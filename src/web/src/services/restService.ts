@@ -29,6 +29,14 @@ export abstract class RestService<T extends Entity> {
         return response.data;
     }
 
+    public async getWithoutUrl(): Promise<T> {
+        const response = await this.client.request<T>({
+            method: 'GET',
+        });
+
+        return response.data
+    }
+
     public async get(id: string): Promise<T> {
         const response = await this.client.request<T>({
             method: 'GET',

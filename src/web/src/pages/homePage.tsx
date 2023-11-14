@@ -4,26 +4,47 @@ import TodoItemListPane from '../components/todoItemListPane';
 import { TodoItem, TodoItemState } from '../models';
 import * as itemActions from '../actions/itemActions';
 import * as listActions from '../actions/listActions';
+import * as urlActions from '../actions/urlActions';
 import { TodoContext } from '../components/todoContext';
 import { AppContext } from '../models/applicationState';
 import { ItemActions } from '../actions/itemActions';
 import { ListActions } from '../actions/listActions';
+import { UrlActions } from '../actions/urlActions';
 import { stackItemPadding, stackPadding, titleStackStyles } from '../ux/styles';
-import { useNavigate, useParams } from 'react-router-dom';
+import { redirect, useNavigate, useParams } from 'react-router-dom';
 import { bindActionCreators } from '../actions/actionCreators';
 import { withApplicationInsights } from '../components/telemetry';
 
 const HomePage = () => {
     const navigate = useNavigate();
     const appContext = useContext<AppContext>(TodoContext)
-    const { listId, itemId } = useParams();
+    const { listId, itemId, shorturl } = useParams();
     const actions = useMemo(() => ({
         lists: bindActionCreators(listActions, appContext.dispatch) as unknown as ListActions,
         items: bindActionCreators(itemActions, appContext.dispatch) as unknown as ItemActions,
+        urls: bindActionCreators(urlActions, appContext.dispatch) as unknown as UrlActions,
     }), [appContext.dispatch]);
 
     const [isReady, setIsReady] = useState(false)
 
+
+    const _checkResponse = function(res: any) {
+        console.log(res);
+        if (res.url) {
+          navigate(res.url);
+        } else {
+          return Promise.reject(`Error: ${res.status}`);
+        }
+      }
+
+    // If there is a shorturl specified as parameter
+    useEffect(() => {
+        if (shorturl) {
+            console.log("Redirecting soon...:", shorturl);
+            actions.urls.load(shorturl).then(_checkResponse);
+        }
+    }, [actions.urls, shorturl])
+    
     // Create default list of does not exist
     useEffect(() => {
         if (appContext.state.lists?.length === 0) {

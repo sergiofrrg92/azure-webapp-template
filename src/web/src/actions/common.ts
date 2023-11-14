@@ -1,5 +1,6 @@
 import * as itemActions from './itemActions';
 import * as listActions from './listActions';
+import * as urlActions from './urlActions';
 
 export enum ActionTypes {
     LOAD_TODO_LISTS = "LOAD_TODO_LISTS",
@@ -11,7 +12,9 @@ export enum ActionTypes {
     LOAD_TODO_ITEM = "LOAD_TODO_ITEM",
     SELECT_TODO_ITEM = "SELECT_TODO_ITEM",
     SAVE_TODO_ITEM = "SAVE_TODO_ITEM",
-    DELETE_TODO_ITEM = "DELETE_TODO_ITEM"
+    DELETE_TODO_ITEM = "DELETE_TODO_ITEM",
+    SAVE_URL_ITEM = "SAVE_URL_ITEM",
+    LOAD_URL_ITEM = "LOAD_URL_ITEM"
 }
 
 export type TodoActions =
@@ -24,4 +27,6 @@ export type TodoActions =
     listActions.SelectListAction |
     listActions.LoadListAction |
     listActions.SaveListAction |
-    listActions.DeleteListAction;
+    listActions.DeleteListAction |
+    urlActions.LoadUrlItemAction |
+    urlActions.SaveUrlItemAction;
