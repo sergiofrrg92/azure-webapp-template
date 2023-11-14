@@ -15,6 +15,12 @@ param collections array = [
     shardKey: 'Hash'
     indexKey: '_id'
   }
+  {
+    name: 'ShortUrl'
+    id: 'ShortUrl'
+    shardKey: 'Hash'
+    indexKey: '_id'
+  }
 ]
 param databaseName string = ''
 param keyVaultName string
