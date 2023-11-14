@@ -21,7 +21,31 @@ router.post("/", async (req, res) => {
         urlItem = await urlItem.save();
 
         res.setHeader("location", `${req.protocol}://${req.get("Host")}/shorturl/${urlItem.id}`);
-        res.status(201).json(urlItem);
+        res.status(200).json(urlItem);
+    }
+    catch (err: any) {
+        switch (err.constructor) {
+        case mongoose.Error.CastError:
+        case mongoose.Error.ValidationError:
+            return res.status(400).json(err.errors);
+        default:
+            throw err;
+        }
+    }
+});
+
+/**
+ * Receives a short url, retrieves it, and returns the regular one it.
+ */
+router.get("/:shorturl", async (req, res) => {
+    try {
+
+        const url = await UrlItemModel
+            .findOne({shortUrl: req.params.shorturl})
+            .orFail()
+            .exec();
+
+        res.status(200).json(url);
     }
     catch (err: any) {
         switch (err.constructor) {
