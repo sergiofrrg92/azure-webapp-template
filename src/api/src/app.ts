@@ -1,8 +1,7 @@
 import express, { Express } from "express";
-import swaggerUI from "swagger-ui-express";
 import cors from "cors";
-import yaml from "yamljs";
 import { getConfig } from "./config";
+import urls from "./routes/urls";
 import lists from "./routes/lists";
 import items from "./routes/items";
 import { configureMongoose } from "./models/mongoose";
@@ -55,12 +54,9 @@ export const createApp = async (): Promise<Express> => {
     }));
 
     // API Routes
-    app.use("/lists/:listId/items", items);
-    app.use("/lists", lists);
-
-    // Swagger UI
-    const swaggerDocument = yaml.load("./openapi.yaml");
-    app.use("/", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
+    app.use("/shorturl", urls);
+    // app.use("/lists/:listId/items", items);
+    // app.use("/lists", lists);
 
     return app;
 };
