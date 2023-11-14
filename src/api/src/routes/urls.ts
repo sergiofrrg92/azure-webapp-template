@@ -1,6 +1,7 @@
 import express, { Request } from "express";
 import mongoose from "mongoose";
 import { UrlItemModel } from "../models/urlItem";
+import { nanoid } from "nanoid";
 
 const router = express.Router();
 
@@ -11,7 +12,7 @@ router.post("/", async (req, res) => {
     try {
 
         const { url } = req.body;
-        const hashedUrl = "hashedUrl";
+        const hashedUrl = nanoid(10);
 
         let urlItem = new UrlItemModel({
             url: url,
