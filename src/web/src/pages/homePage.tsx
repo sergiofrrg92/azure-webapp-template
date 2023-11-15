@@ -16,6 +16,8 @@ const HomePage = () => {
     const actions = useMemo(() => ({
         urls: bindActionCreators(urlActions, appContext.dispatch) as unknown as UrlActions,
     }), [appContext.dispatch]);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [isRedirecting, setIsRedirecting] = useState(shorturl ? true : false);
     const [inputValue, setInputValue] = useState('');
     const [shortenedUrl, setShortenedUrl] = useState('');
 
@@ -60,26 +62,31 @@ const HomePage = () => {
         <Stack>
             <Stack.Item>
                 <Stack horizontal styles={titleStackStyles} tokens={stackPadding}>
-                    <h2>Please add your url to miniaturize</h2>
+                    {isRedirecting ? 
+                        <h2>Redirecting, please wait...</h2> :
+                        <h2>Please add your url to miniaturize</h2>}
                 </Stack>
             </Stack.Item>
-            <form>
+            {!isRedirecting && (
+            <>
+                <form>
+                    <Stack.Item tokens={stackItemPadding}>
+                        <TextField 
+                        label='URL'
+                        placeholder='Add your Url here'
+                        aria-label='Field to add your url into'
+                        value={inputValue}
+                        onChange={(event) => setInputValue(event.currentTarget.value)}
+                        />
+                    </Stack.Item>
+                    <Stack.Item tokens={stackItemPadding}>
+                        <DefaultButton type="submit" onClick={onUrlSubmit}>Submit</DefaultButton>
+                    </Stack.Item>
+                </form>
                 <Stack.Item tokens={stackItemPadding}>
-                    <TextField 
-                    label='URL'
-                    placeholder='Add your Url here'
-                    aria-label='Field to add your url into'
-                    value={inputValue}
-                    onChange={(event) => setInputValue(event.currentTarget.value)}
-                    />
+                    <Text placeholder='Your miniaturized url will be displayed here'>{shortenedUrl}</Text>  
                 </Stack.Item>
-                <Stack.Item tokens={stackItemPadding}>
-                    <DefaultButton type="submit" onClick={onUrlSubmit}>Submit</DefaultButton>
-                </Stack.Item>
-            </form>
-            <Stack.Item tokens={stackItemPadding}>
-                <Text placeholder='Your miniaturized url will be displayed here'>{shortenedUrl}</Text>  
-            </Stack.Item>
+            </>)}
         </Stack >
     );
 };

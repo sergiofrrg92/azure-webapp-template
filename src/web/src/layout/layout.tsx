@@ -37,9 +37,6 @@ const Layout: FC = (): ReactElement => {
                 </Stack.Item>
                 <Stack.Item grow={1} styles={mainStackStyles}>
                     <Routes>
-                        <Route path="/lists/:listId/items/:itemId" element={<HomePage />} />
-                        <Route path="/lists/:listId" element={<HomePage />} />
-                        <Route path="/lists" element={<HomePage />} />
                         <Route path="/:shorturl" element={<HomePage />} />
                         <Route path="/" element={<HomePage />} />
                     </Routes>
