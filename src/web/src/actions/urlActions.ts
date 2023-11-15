@@ -20,7 +20,7 @@ export const load = (shorturl: string): ActionMethod<UrlItem> => async (dispatch
 }
 
 export const save = (url: string): ActionMethod<UrlItem> => async (dispatch: Dispatch<SaveUrlItemAction>) => {
-    const urlService = new UrlService(config.api.baseUrl, ``);
+    const urlService = new UrlService(config.api.baseUrl, `/shorturl`);
     const newUrl = await urlService.saveUrl(url);
 
     dispatch(saveUrlItemAction(newUrl));
