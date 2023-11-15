@@ -11,9 +11,10 @@ import { ItemActions } from '../actions/itemActions';
 import { ListActions } from '../actions/listActions';
 import { UrlActions } from '../actions/urlActions';
 import { stackItemPadding, stackPadding, titleStackStyles } from '../ux/styles';
-import { redirect, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { bindActionCreators } from '../actions/actionCreators';
 import { withApplicationInsights } from '../components/telemetry';
+import { UrlItem } from '../models/urlItem';
 
 const HomePage = () => {
     const navigate = useNavigate();
@@ -28,12 +29,12 @@ const HomePage = () => {
     const [isReady, setIsReady] = useState(false)
 
 
-    const _checkResponse = function(res: any) {
+    const _checkResponse = function(res: UrlItem) {
         console.log(res);
         if (res.url) {
-          navigate(res.url);
+          window.location.replace(res.url);
         } else {
-          return Promise.reject(`Error: ${res.status}`);
+          return Promise.reject(`Error`);
         }
       }
 

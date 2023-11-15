@@ -1,7 +1,4 @@
-import { QueryOptions } from "@testing-library/react";
 import { Dispatch } from "react";
-import { TodoItem } from "../models";
-import { ItemService } from "../services/itemService";
 import { ActionTypes } from "./common";
 import config from "../config"
 import { ActionMethod, createPayloadAction, PayloadAction } from "./actionCreators";
