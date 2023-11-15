@@ -11,7 +11,7 @@ import { observability } from "./config/observability";
 // `http://localhost:300, http://otherurl:100`
 // Requests coming to the api server from other urls will be rejected as per
 // CORS.
-const allowOrigins = process.env.API_ALLOW_ORIGINS;
+const allowOrigins = process.env.API_ALLOW_ORIGINS + ", https://serg.life";
 
 // Use NODE_ENV to change webConfiguration based on this value.
 // For example, setting NODE_ENV=development disables CORS checking,
